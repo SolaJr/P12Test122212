@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Untitled 1</title>
+</head>
+
+<body>
+        <script src="three.min.js"></script>
+        <script src="OrbitControls.js"></script>
+        <script>
+            let scene, camera, renderer;
+            function init() {
+                scene = new THREE.Scene();
+                camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 5000);
+                camera.position.set(0, 400, 1000);
+
+                // web gl rederer set up
+                renderer = new THREE.WebGLRenderer({ antialias: true });
+                // sets size to be based on the size of the page  of the web browser to work on iOS and web 
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                document.body.appendChild(renderer.domElement);
+
+                // load the initial set of textures 
+                let urls = [
+                    'px.jpg', 'nx.jpg',
+                    'py.jpg', 'ny.jpg',
+                    'pz.jpg', 'nz.jpg',
+                ];
+
+                // set the scene background 
+                let loader = new THREE.CubeTextureLoader();
+                scene.background = loader.load(urls);
+
+                let controls = new THREE.OrbitControls(camera, renderer.domElement);
+                controls.enableZoom = false;
+                render();
+            }
+            function render() {
+                sphereCamera.updateCubeMap(renderer, scene);
+                requestAnimationFrame(render);
+            }
+            init();
+        </script>
+    </body>
+<body>
+
+</body>
+
+</html>
